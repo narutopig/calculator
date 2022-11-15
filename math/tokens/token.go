@@ -41,7 +41,7 @@ func (t Token) Precedence() int {
 	return -1
 }
 
-func (t Token) stringify() string {
+func (t Token) Stringify() string {
 	switch t.Type {
 	case NUMBER:
 		return fmt.Sprintf("%f", t.Value)
@@ -91,7 +91,7 @@ func SPrintArr(tokens []Token) string {
 	res := ""
 
 	for _, t := range tokens {
-		res += t.stringify()
+		res += t.Stringify()
 	}
 
 	return res
