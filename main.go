@@ -156,7 +156,7 @@ func main() {
 				if err != nil {
 					panic(err)
 				}
-				result.Text = fmt.Sprintf("%f", val)
+				result.Text = round(val)
 				result.Refresh()
 			}))
 		}
@@ -164,4 +164,8 @@ func main() {
 
 	window.SetContent(container.New(layout.NewVBoxLayout(), display, basic))
 	window.ShowAndRun()
+}
+
+func round(num float64) string {
+	return strconv.FormatFloat(num, 'f', -1, 64)
 }
