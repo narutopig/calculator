@@ -14,7 +14,6 @@ func Eval(ts tokens.TokenStack) (float64, error) {
 
 	for !toks.Empty() {
 		token := toks.Pop()
-		fmt.Println(token)
 
 		if token.Type == tokens.NUMBER {
 			stack.push(token.Value)
