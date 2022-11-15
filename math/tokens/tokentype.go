@@ -3,6 +3,8 @@ package tokens
 type TokenType byte
 
 // Different tokens that are in the calculator
+//
+//go:generate stringer -type=TokenType
 const (
 	// values
 	NUMBER TokenType = iota

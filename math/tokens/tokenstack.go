@@ -42,6 +42,22 @@ func (t *TokenStack) Peek() *Token {
 	return &last
 }
 
+// Reverse reverses the order of the stack
+func (t TokenStack) Reverse() TokenStack {
+	length := len(t.tokens)
+	new := make([]Token, length)
+
+	for i := length - 1; i >= 0; i-- {
+		val := t.Pop()
+		if val == nil {
+			panic("empty stack")
+		}
+		new[length-i-1] = *val
+	}
+
+	return TokenStack{new}
+}
+
 func TS() TokenStack {
 	return TokenStack{}
 }
