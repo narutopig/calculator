@@ -16,7 +16,6 @@ import (
 )
 
 func main() {
-	test()
 	app := app.New()
 	window := app.NewWindow("Calculator")
 
@@ -27,7 +26,7 @@ func main() {
 
 	// needed to update stuff
 	current := canvas.NewText("", color.White)
-	result := canvas.NewText("There", color.White)
+	result := canvas.NewText("", color.White)
 
 	add := func(token tokens.Token) {
 		currTokens = append(currTokens, token)
@@ -64,6 +63,7 @@ func main() {
 		clearBtn := widget.NewButton("AC", func() {
 			currTokens = make([]tokens.Token, 0)
 			currNum = ""
+			current.Text = ""
 			refresh()
 		})
 		lpBtn := widget.NewButton("(", func() {
@@ -130,14 +130,7 @@ func main() {
 				}
 			}))
 
-			basic.Add(widget.NewButton("C", func() {
-				length := len(currTokens)
-				if length > 0 {
-					currTokens = currTokens[:length-1]
-					currNum = ""
-					current.Text = ""
-				}
-				refresh()
+			basic.Add(widget.NewButton("", func() {
 			}))
 
 			basic.Add(widget.NewButton(".", func() {
@@ -159,9 +152,6 @@ func main() {
 					}
 					add(tokens.T(tokens.NUMBER, val))
 				}
-				for _, t := range currTokens {
-					fmt.Println(t)
-				}
 				val, err := parser.Eval(parser.Shunt(currTokens))
 				if err != nil {
 					panic(err)
@@ -174,12 +164,4 @@ func main() {
 
 	window.SetContent(container.New(layout.NewVBoxLayout(), display, basic))
 	window.ShowAndRun()
-}
-
-func test() {
-	t := []tokens.Token{tokens.T(tokens.NUMBER, 3), tokens.T(tokens.ADD, 0), tokens.T(tokens.NUMBER, 4)}
-
-	shunt := parser.Shunt(t)
-
-	fmt.Println(parser.Eval(shunt))
 }
