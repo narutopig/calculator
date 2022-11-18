@@ -152,17 +152,94 @@ func main() {
 					}
 					add(tokens.T(tokens.NUMBER, val))
 				}
+				for _, t := range currTokens {
+					fmt.Println(t)
+				}
 				val, err := parser.Eval(parser.Shunt(currTokens))
 				if err != nil {
 					panic(err)
 				}
+				currTokens = make([]tokens.Token, 0)
+				current.Text = ""
+				current.Refresh()
 				result.Text = round(val)
 				result.Refresh()
 			}))
 		}
 	}
 
-	window.SetContent(container.New(layout.NewVBoxLayout(), display, basic))
+	advanced := container.New(layout.NewGridLayout(4))
+	{
+		square := widget.NewButton("a^2", func() {
+			current.Text += "^2"
+			update(tokens.T(tokens.EXP, 0))
+			update(tokens.T(tokens.NUMBER, 2))
+			refresh()
+		})
+		exp := widget.NewButton("a^b", func() {
+			current.Text += "^"
+			update(tokens.T(tokens.EXP, 0))
+		})
+		log := widget.NewButton("log", func() {
+			current.Text += "log"
+			update(tokens.T(tokens.LOG, 0))
+		})
+		ln := widget.NewButton("ln", func() {
+			current.Text += "ln"
+			update(tokens.T(tokens.LN, 0))
+		})
+		pi := widget.NewButton("π", func() {
+			current.Text += "π"
+			update(tokens.T(tokens.PI, 0))
+		})
+		e := widget.NewButton("e", func() {
+			current.Text += "e"
+			update(tokens.T(tokens.E, 0))
+		})
+		sin := widget.NewButton("sin", func() {
+			current.Text += "sin"
+			update(tokens.T(tokens.SIN, 0))
+		})
+		cos := widget.NewButton("cos", func() {
+			current.Text += "cos"
+			update(tokens.T(tokens.COS, 0))
+		})
+		tan := widget.NewButton("tan", func() {
+			current.Text += "tan"
+			update(tokens.T(tokens.TAN, 0))
+		})
+		asin := widget.NewButton("asin", func() {
+			current.Text += "asin"
+			update(tokens.T(tokens.ARCSIN, 0))
+		})
+		acos := widget.NewButton("acos", func() {
+			current.Text += "acos"
+			update(tokens.T(tokens.ARCCOS, 0))
+		})
+		atan := widget.NewButton("atan", func() {
+			current.Text += "atan"
+			update(tokens.T(tokens.ARCTAN, 0))
+		})
+
+		advanced.Add(square)
+		advanced.Add(exp)
+		advanced.Add(log)
+		advanced.Add(ln)
+		advanced.Add(pi)
+		advanced.Add(e)
+		advanced.Add(sin)
+		advanced.Add(cos)
+		advanced.Add(tan)
+		advanced.Add(asin)
+		advanced.Add(acos)
+		advanced.Add(atan)
+	}
+
+	buttons := container.New(layout.NewHBoxLayout())
+	buttons.Add(advanced)
+	buttons.Add(basic)
+
+	window.SetContent(container.New(layout.NewVBoxLayout(), display, buttons))
 	window.ShowAndRun()
 }
 

@@ -46,7 +46,7 @@ func Eval(ts tokens.TokenStack) (float64, error) {
 				}
 				stack.push(left / right)
 			} else if token.Type == tokens.EXP {
-				stack.push(math.Pow(left, right))
+				stack.push(math.Pow(right, left))
 			}
 		}
 	}

@@ -25,7 +25,7 @@ func Shunt(input []tokens.Token) tokens.TokenStack {
 			o1 := token
 			o2 := operator.Peek()
 			// assumes all operators are left-associative
-			for o2 != nil && o2.Type != tokens.LPAREN && o2.Precedence() >= o1.Precedence() {
+			for o2 != nil && o2.Type != tokens.LPAREN && (o2.Precedence() > o1.Precedence() || (o2.Precedence() == o1.Precedence() && o1.Type == tokens.EXP)) {
 				top := operator.Pop()
 
 				output.Push(*top)
