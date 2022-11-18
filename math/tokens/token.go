@@ -1,6 +1,9 @@
 package tokens
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 // Token represents a token in a exprsesion
 type Token struct {
@@ -44,7 +47,7 @@ func (t Token) Precedence() int {
 func (t Token) Stringify() string {
 	switch t.Type {
 	case NUMBER:
-		return fmt.Sprintf("%f", t.Value)
+		return round(t.Value)
 	case E:
 		return "e"
 	case PI:
@@ -99,4 +102,8 @@ func SPrintArr(tokens []Token) string {
 
 func (t Token) String() string {
 	return fmt.Sprintf("Token{Type:%s,Value:%f}", t.Type, t.Value)
+}
+
+func round(num float64) string {
+	return strconv.FormatFloat(num, 'f', -1, 64)
 }

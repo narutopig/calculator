@@ -21,7 +21,7 @@ func Eval(ts tokens.TokenStack) (float64, error) {
 			stack.push(math.E)
 		} else if token.Type == tokens.PI {
 			stack.push(math.Pi)
-		} else {
+		} else if token.Category() == tokens.OPERATOR {
 			// operator
 
 			right, err := stack.pop()
@@ -46,8 +46,10 @@ func Eval(ts tokens.TokenStack) (float64, error) {
 				}
 				stack.push(left / right)
 			} else if token.Type == tokens.EXP {
-				stack.push(math.Pow(right, left))
+				stack.push(math.Pow(left, right))
 			}
+		} else if token.Category() == tokens.FUNCTION {
+			fmt.Println(token)
 		}
 	}
 
